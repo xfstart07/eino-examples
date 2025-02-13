@@ -6,6 +6,8 @@ toolchain go1.22.10
 
 require (
 	github.com/cloudwego/eino v0.3.7
+	github.com/cloudwego/eino-ext/components/document/parser/html v0.0.0-20250117061805-cd80d1780d76
+	github.com/cloudwego/eino-ext/components/document/parser/pdf v0.0.0-20250117061805-cd80d1780d76
 	github.com/cloudwego/eino-ext/components/model/ollama v0.0.0-20250110031740-2b102ddbf6ee
 	github.com/cloudwego/eino-ext/components/model/openai v0.0.0-20250114173536-ca9322ed9f9a
 	github.com/cloudwego/eino-ext/components/retriever/volc_vikingdb v0.0.0-20250108030439-1493aa120cb1
@@ -13,6 +15,7 @@ require (
 	github.com/cloudwego/eino-ext/devops v0.1.0
 	github.com/davecgh/go-spew v1.1.2-0.20180830191138-d8f796af33cc
 	github.com/getkin/kin-openapi v0.118.0
+	github.com/joho/godotenv v1.5.1
 	github.com/ollama/ollama v0.3.0
 	github.com/stretchr/testify v1.9.0
 )
@@ -25,8 +28,6 @@ require (
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
 	github.com/cenkalti/backoff/v4 v4.2.1 // indirect
 	github.com/cloudwego/base64x v0.1.4 // indirect
-	github.com/cloudwego/eino-ext/components/document/parser/html v0.0.0-20250117061805-cd80d1780d76 // indirect
-	github.com/cloudwego/eino-ext/components/document/parser/pdf v0.0.0-20250117061805-cd80d1780d76 // indirect
 	github.com/cloudwego/eino-ext/libs/acl/openai v0.0.0-20250114173020-562b40c138d3 // indirect
 	github.com/cloudwego/iasm v0.2.0 // indirect
 	github.com/dslipak/pdf v0.0.2 // indirect
