@@ -12,6 +12,7 @@ require (
 	github.com/cloudwego/hertz v0.9.5
 	github.com/google/uuid v1.6.0
 	github.com/hertz-contrib/sse v0.0.6-0.20240617114443-10a844794bf3
+	github.com/joho/godotenv v1.5.1
 	github.com/redis/go-redis/v9 v9.7.0
 )
 

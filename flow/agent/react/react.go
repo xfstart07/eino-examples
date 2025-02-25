@@ -22,6 +22,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"os"
 
 	"github.com/cloudwego/eino-ext/components/model/openai"
@@ -31,25 +32,33 @@ import (
 	"github.com/cloudwego/eino/flow/agent"
 	"github.com/cloudwego/eino/flow/agent/react"
 	"github.com/cloudwego/eino/schema"
+	"github.com/joho/godotenv"
 
 	"github.com/cloudwego/eino-examples/flow/agent/react/tools"
 	"github.com/cloudwego/eino-examples/internal/logs"
 )
 
+func init() {
+	// 加载 .env 文件
+	if err := godotenv.Load(); err != nil {
+		log.Printf("警告: 未能加载 .env 文件: %v", err)
+	}
+}
+
 func main() {
 	openAIAPIKey := os.Getenv("OPENAI_API_KEY")
-	// openAIBaseURL := os.Getenv("OPENAI_BASE_URL")
+	openAIBaseURL := os.Getenv("OPENAI_BASE_URL")
 	openAIModelName := os.Getenv("OPENAI_MODEL_NAME")
 
 	ctx := context.Background()
 
 	// prepare chat model
 	chatModel, err := openai.NewChatModel(ctx, &openai.ChatModelConfig{
-		// BaseURL: openAIBaseURL, // if using Azure or other models conforming to OpenAI protocol, set this to your model's base URL
-		APIKey: openAIAPIKey,
-		Model:  openAIModelName,
+		BaseURL: openAIBaseURL, // if using Azure or other models conforming to OpenAI protocol, set this to your model's base URL
+		APIKey:  openAIAPIKey,
+		Model:   openAIModelName,
 		// ByAzure:    true, // if using Azure's OpenAI API, set this to true
-		APIVersion: "2024-06-01",
+		// APIVersion: "2024-06-01",
 	})
 	if err != nil {
 		logs.Errorf("failed to create chat model: %v", err)
@@ -79,48 +88,48 @@ func main() {
 	}
 
 	// if you want ping/pong, use Generate
-	// msg, err := agent.Generate(ctx, []*schema.Message{
-	// 	{
-	// 		Role:    schema.User,
-	// 		Content: "我在海淀区，给我推荐一些菜，需要有口味辣一点的菜，至少推荐有 2 家餐厅",
-	// 	},
-	// }, react.WithCallbacks(&myCallback{}))
-	// if err != nil {
-	// 	log.Printf("failed to generate: %v\n", err)
-	// 	return
-	// }
-	// fmt.Println(msg.String())
-
-	sr, err := ragent.Stream(ctx, []*schema.Message{
+	msg, err := ragent.Generate(ctx, []*schema.Message{
 		{
 			Role:    schema.User,
 			Content: "我在海淀区，给我推荐一些菜，需要有口味辣一点的菜，至少推荐有 2 家餐厅",
 		},
 	}, agent.WithComposeOptions(compose.WithCallbacks(&LoggerCallback{})))
 	if err != nil {
-		logs.Errorf("failed to stream: %v", err)
+		log.Printf("failed to generate: %v\n", err)
 		return
 	}
+	fmt.Println(msg.String())
 
-	defer sr.Close() // remember to close the stream
+	// sr, err := ragent.Stream(ctx, []*schema.Message{
+	// 	{
+	// 		Role:    schema.User,
+	// 		Content: "我在徐汇区，给我推荐一些菜，需要有口味辣一点的菜，至少推荐有 2 家餐厅",
+	// 	},
+	// }, agent.WithComposeOptions(compose.WithCallbacks(&LoggerCallback{})))
+	// if err != nil {
+	// 	logs.Errorf("failed to stream: %v", err)
+	// 	return
+	// }
 
-	logs.Infof("\n\n===== start streaming =====\n\n")
+	// defer sr.Close() // remember to close the stream
 
-	for {
-		msg, err := sr.Recv()
-		if err != nil {
-			if errors.Is(err, io.EOF) {
-				// finish
-				break
-			}
-			// error
-			logs.Infof("failed to recv: %v", err)
-			return
-		}
+	// logs.Infof("\n\n===== start streaming =====\n\n")
 
-		// 打字机打印
-		logs.Tokenf("%v", msg.Content)
-	}
+	// for {
+	// 	msg, err := sr.Recv()
+	// 	if err != nil {
+	// 		if errors.Is(err, io.EOF) {
+	// 			// finish
+	// 			break
+	// 		}
+	// 		// error
+	// 		logs.Infof("failed to recv: %v", err)
+	// 		return
+	// 	}
+
+	// 	// 打字机打印
+	// 	logs.Tokenf("%v", msg.Content)
+	// }
 
 	logs.Infof("\n\n===== finished =====\n")
 

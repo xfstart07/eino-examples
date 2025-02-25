@@ -20,21 +20,30 @@ import (
 	"context"
 	"fmt"
 	"io/fs"
+	"log"
 	"path/filepath"
 	"strings"
 
 	"github.com/cloudwego/eino-ext/components/document/transformer/splitter/markdown"
 	"github.com/cloudwego/eino/components/document"
 	"github.com/cloudwego/eino/components/embedding"
+	"github.com/joho/godotenv"
 	"github.com/redis/go-redis/v9"
 
 	"github.com/cloudwego/eino-examples/quickstart/eino_assistant/eino/knowledgeindexing"
 )
 
+func init() {
+	// 加载 .env 文件
+	if err := godotenv.Load(); err != nil {
+		log.Printf("警告: 未能加载 .env 文件: %v", err)
+	}
+}
+
 func main() {
 	ctx := context.Background()
 
-	err := indexMarkdownFiles(ctx, "./eino-docs")
+	err := indexMarkdownFiles(ctx, "./cmd/knowledgeindexing/eino-docs")
 	if err != nil {
 		panic(err)
 	}

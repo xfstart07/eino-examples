@@ -18,6 +18,7 @@ package einoagent
 
 import (
 	"context"
+	"log"
 	"os"
 
 	"github.com/cloudwego/eino-ext/components/model/ark"
@@ -25,6 +26,8 @@ import (
 )
 
 func defaultArkChatModelConfig(ctx context.Context) (*ark.ChatModelConfig, error) {
+	log.Printf("model: %s", os.Getenv("ARK_CHAT_MODEL"))
+
 	config := &ark.ChatModelConfig{
 		Model:  os.Getenv("ARK_CHAT_MODEL"),
 		APIKey: os.Getenv("ARK_API_KEY"),

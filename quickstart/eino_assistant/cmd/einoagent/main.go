@@ -23,6 +23,7 @@ import (
 	"time"
 
 	"github.com/cloudwego/eino-ext/devops"
+	"github.com/joho/godotenv"
 
 	"github.com/cloudwego/eino-examples/quickstart/eino_assistant/cmd/einoagent/agent"
 	"github.com/cloudwego/eino-examples/quickstart/eino_assistant/cmd/einoagent/task"
@@ -32,6 +33,11 @@ import (
 )
 
 func init() {
+	// 加载 .env 文件
+	if err := godotenv.Load(); err != nil {
+		log.Printf("警告: 未能加载 .env 文件: %v", err)
+	}
+
 	if os.Getenv("EINO_DEBUG") != "false" {
 		err := devops.Init(context.Background())
 		if err != nil {
