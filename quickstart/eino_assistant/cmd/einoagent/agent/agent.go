@@ -64,7 +64,7 @@ func Init() error {
 		if os.Getenv("LANGFUSE_PUBLIC_KEY") != "" && os.Getenv("LANGFUSE_SECRET_KEY") != "" {
 			fmt.Println("[eino agent] INFO: use langfuse as callback, watch at: https://cloud.langfuse.com")
 			cbh, _ := langfuse.NewLangfuseHandler(&langfuse.Config{
-				Host:      "https://cloud.langfuse.com",
+				Host:      "https://us.cloud.langfuse.com",
 				PublicKey: os.Getenv("LANGFUSE_PUBLIC_KEY"),
 				SecretKey: os.Getenv("LANGFUSE_SECRET_KEY"),
 				Name:      "Eino Assistant",

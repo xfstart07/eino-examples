@@ -35,3 +35,6 @@ output/*
 # Vscode files
 .vscode
 .DS_Store
+
+# go mod
+vendor/

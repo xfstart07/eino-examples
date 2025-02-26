@@ -27,7 +27,7 @@ import (
 
 const (
 	RedisPrefix = "eino:doc:"
-	IndexName   = "vector_index"
+	IndexName   = "vector2560_index"
 
 	ContentField  = "content"
 	MetadataField = "metadata"
@@ -42,7 +42,7 @@ func Init() error {
 	initOnce.Do(func() {
 		err = InitRedisIndex(context.Background(), &Config{
 			RedisAddr: "localhost:6379",
-			Dimension: 4096,
+			Dimension: 2560, // 向量最高维度4096
 		})
 	})
 	return err

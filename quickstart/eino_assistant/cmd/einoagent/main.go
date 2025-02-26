@@ -38,11 +38,11 @@ func init() {
 		log.Printf("警告: 未能加载 .env 文件: %v", err)
 	}
 
-	if os.Getenv("EINO_DEBUG") != "false" {
-		err := devops.Init(context.Background())
-		if err != nil {
-			log.Printf("[eino dev] init failed, err=%v", err)
-		}
+	// if os.Getenv("EINO_DEBUG") != "false" {
+	// }
+	err := devops.Init(context.Background())
+	if err != nil {
+		log.Printf("[eino dev] init failed, err=%v", err)
 	}
 }
 

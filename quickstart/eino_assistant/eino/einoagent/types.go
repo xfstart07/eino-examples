@@ -18,8 +18,21 @@ package einoagent
 
 import "github.com/cloudwego/eino/schema"
 
+// UserMessage 表示用户发送的消息
+// 这个结构体是Eino Agent的输入，包含了用户查询和对话历史
+// 在整个处理流程中，UserMessage会被转换为查询字符串用于检索，
+// 同时其中的历史记录会被用于维护对话上下文
 type UserMessage struct {
-	ID      string            `json:"id"`
-	Query   string            `json:"query"`
+	// ID 是消息的唯一标识符
+	// 用于跟踪和关联消息，特别是在异步处理场景中
+	ID string `json:"id"`
+
+	// Query 是用户的当前查询文本
+	// 这是用户输入的实际内容，将被用于知识库检索和生成回复
+	Query string `json:"query"`
+
+	// History 是之前的对话历史记录
+	// 包含了用户和系统之间的历史消息，用于维护对话上下文
+	// 使用schema.Message类型，可以包含角色、内容等信息
 	History []*schema.Message `json:"history"`
 }
