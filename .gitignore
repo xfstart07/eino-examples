@@ -38,3 +38,8 @@ output/*
 
 # go mod
 vendor/
+
+# data
+data/memory/*
+data/redis/*
+data/task/*
